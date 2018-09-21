@@ -39,8 +39,8 @@ if __name__ == '__main__':
     hist.history = load_hist()
 
     if not hist.history:
-        train_file = '../mlz/test/kaggle/datasets/train.csv'
-        test_file = '../mlz/test/kaggle/datasets/test.csv'
+        train_file = '../datasets/train.csv'
+        test_file = '../datasets/test.csv'
 
         X_test = loadtxt(test_file, usecols=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), unpack=True, delimiter=',').T
         Y_test = loadtxt(test_file, unpack=True, usecols=(11), delimiter=',')
