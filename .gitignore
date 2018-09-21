@@ -102,3 +102,14 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#idea-pycharm
+.idea/
+*.iml
+
+# parsl
+runinfo/
+
+# others
+Random_Cat_*
+out/
