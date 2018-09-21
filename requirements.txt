@@ -1,0 +1,10 @@
+parsl
+pyfits
+numpy
+sklearn
+xgboost
+mpi4py
+matplotlib
+tkinter
+keras
+tensorflow
