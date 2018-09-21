@@ -111,5 +111,6 @@ venv.bak/
 runinfo/
 
 # others
-Random_Cat_*
 out/
+*.p
+
