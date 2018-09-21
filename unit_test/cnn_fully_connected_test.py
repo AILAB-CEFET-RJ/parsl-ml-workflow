@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras.layers import Dense
 
+from tabulate import tabulate
+
 
 def plot(h, metric):
     fig, ax = plt.subplots()
@@ -18,8 +20,9 @@ def plot(h, metric):
 
 def create_baseline_model():
      model = Sequential()
-     model.add(Dense(units=10, input_dim=10, activation='relu'))
-     model.add(Dense(units=1, activation='relu'))
+     model.add(Dense(10, input_dim=10, activation='relu'))
+     model.add(Dense(20, activation='relu'))
+     model.add(Dense(1, activation='linear'))
      model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae', 'mape', 'cosine'])
 
      return model
@@ -51,10 +54,15 @@ if __name__ == '__main__':
         print('Data loaded!')
 
         model = create_baseline_model()
-        hist = model.fit(X, Y, validation_data=(X_test, Y_test), epochs=40)
+        hist = model.fit(X, Y, validation_data=(X_test, Y_test), epochs=7)
         preds = model.predict(X_test)
 
-        pickle.dump(hist.history, open('trainHistoryDict.p', 'wb'))
+        #pickle.dump(hist.history, open('trainHistoryDict.p', 'wb'))
+
+        pred = preds.reshape(len(preds))
+        real = Y_test
+        t = tabulate(array([real, pred]).T[:50], headers=['Real', 'Predict'], tablefmt='orgtbl')
+        print(t)
 
 
     plot(hist.history, 'mean_squared_error')

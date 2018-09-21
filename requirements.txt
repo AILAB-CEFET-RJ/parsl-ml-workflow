@@ -8,3 +8,4 @@ matplotlib
 tkinter
 keras
 tensorflow
+tabulate
