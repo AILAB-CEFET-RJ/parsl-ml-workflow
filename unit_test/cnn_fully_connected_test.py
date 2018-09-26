@@ -15,10 +15,10 @@ def plot(h, metric):
     ax.legend()
     plt.title(metric)
     ax.set_xlabel('epochs')
-    plt.show()
+    plt.savefig('../plot/'+metric+'.pdf')
 
 def plot_scatter(X, Y, X_test, Y_test, preds):
-    plt.figure(figsize=(15, 15))
+    #plt.figure(figsize=(15, 15))
     plt.subplot(3, 1, 1)
     plt.ylabel("Redshift")
     plt.scatter(X[:, 3], Y)
@@ -31,7 +31,7 @@ def plot_scatter(X, Y, X_test, Y_test, preds):
     plt.subplot(3, 1, 3)
     plt.scatter(X_test[:, 3], preds)
     plt.ylabel("Predito")
-    plt.show()
+    plt.savefig('../plot/redshift.png')
 
 
 def create_baseline_model():
