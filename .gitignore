@@ -112,5 +112,6 @@ runinfo/
 
 # others
 out/
+plot/
 *.p
 
