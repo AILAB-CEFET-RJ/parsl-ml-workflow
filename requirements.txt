@@ -9,3 +9,4 @@ tkinter
 keras
 tensorflow
 tabulate
+sklearn
