@@ -60,7 +60,7 @@ if __name__ == '__main__':
     print('Data loaded!')
 
     model = create_baseline_model()
-    hist = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=3)
+    hist = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=1000)
     preds = model.predict(X_test)
 
     pred = preds.reshape(len(preds))
