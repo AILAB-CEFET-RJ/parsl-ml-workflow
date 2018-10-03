@@ -4,7 +4,7 @@ from numpy import array
 from tabulate import tabulate
 
 
-def plot(h, metric, dir='../plot/'):
+def plot(h, metric, dir='../plot/', show_only=False):
     fig, ax = plt.subplots()
     epochs = range(len(h[metric]))
     ax.plot(epochs, h[metric], c='blue', label='train')
@@ -12,17 +12,27 @@ def plot(h, metric, dir='../plot/'):
     ax.legend()
     plt.title(metric)
     ax.set_xlabel('epochs')
-    plt.savefig(dir + metric + '.pdf')
 
-def plot_hm(x, y, dir='../plot/'):
+    if show_only:
+        plt.show()
+    else:
+        plt.savefig(dir + metric + '.pdf')
+
+
+def plot_hm(x, y, dir='../plot/', show_only=False):
     heatmap, xedges, yedges = histogram2d(x, y, bins=500)
     extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
 
     plt.clf()
     plt.imshow(heatmap.T, extent=extent, origin='lower')
-    plt.savefig(dir + 'heatmap.pdf')
 
-def plot_scatter(X, Y, X_test, Y_test, preds, dir='../plot/'):
+    if show_only:
+        plt.show()
+    else:
+        plt.savefig(dir + 'heatmap.pdf')
+
+
+def plot_scatter(X, Y, X_test, Y_test, preds, dir='../plot/', show_only=False):
     plt.subplot(3, 1, 1)
     plt.ylabel("Redshift")
     plt.scatter(X[:, 3], Y)
@@ -35,7 +45,12 @@ def plot_scatter(X, Y, X_test, Y_test, preds, dir='../plot/'):
     plt.subplot(3, 1, 3)
     plt.scatter(X_test[:, 3], preds)
     plt.ylabel("Predito")
-    plt.savefig(dir + 'redshift.png')
+
+    if show_only:
+        plt.show()
+    else:
+        plt.savefig(dir + 'redshift.png')
+
 
 def plot_table(x, y):
     t = tabulate(array([x, y]).T[:50], headers=['Real', 'Predict'], tablefmt='orgtbl')
