@@ -3,12 +3,14 @@ from numpy import histogram2d
 from numpy import array
 from tabulate import tabulate
 
+from matplotlib.ticker import NullFormatter
+
 
 def plot(h, metric, dir='../plot/', show_only=False):
     fig, ax = plt.subplots()
     epochs = range(len(h[metric]))
     ax.plot(epochs, h[metric], c='blue', label='train')
-    ax.plot(epochs, h['val_'+metric], c='green', label='test')
+    ax.plot(epochs, h['val_'+metric], c='green', label='val')
     ax.legend()
     plt.title(metric)
     ax.set_xlabel('epochs')
@@ -32,19 +34,27 @@ def plot_hm(x, y, dir='../plot/', show_only=False):
         plt.savefig(dir + 'heatmap.pdf')
 
 
-def plot_scatter(X, Y, X_test, Y_test, preds, dir='../plot/', show_only=False):
-    plt.subplot(3, 1, 1)
-    plt.ylabel("Redshift")
+def plot_scatter(X, Y, X_val, y_val, X_test, Y_test, preds, dir='../plot/', show_only=False):
+    plt.suptitle("Infrared X Redshift", color='red')
+
+    plt.subplot(221)
     plt.scatter(X[:, 3], Y)
-    plt.ylabel("Treino")
+    plt.title("Treino")
 
-    plt.subplot(3, 1, 2)
+    plt.subplot(222)
+    plt.scatter(X_val[:, 3], y_val)
+    plt.title("Validacao")
+
+    plt.subplot(223)
     plt.scatter(X_test[:, 3], Y_test)
-    plt.ylabel("Teste")
+    plt.title("Teste")
 
-    plt.subplot(3, 1, 3)
+    plt.subplot(224)
     plt.scatter(X_test[:, 3], preds)
-    plt.ylabel("Predito")
+    plt.title("Predito")
+
+    plt.gca().yaxis.set_minor_formatter(NullFormatter())
+    plt.subplots_adjust(top=0.92, bottom=0.08, left=0.10, right=0.95, hspace=0.25, wspace=0.35)
 
     if show_only:
         plt.show()
