@@ -56,6 +56,7 @@ def find_best_params(X_train, y_train):
 
     # print results
     print('Best Params:', search.best_params_)
+    print('Best Score:', search.best_score_)
 
     return search.best_params_
 
