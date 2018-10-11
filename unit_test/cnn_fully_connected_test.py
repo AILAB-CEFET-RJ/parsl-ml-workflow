@@ -5,7 +5,7 @@ from numpy import *
 from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
 from keras.wrappers.scikit_learn import KerasRegressor
 
 
@@ -24,12 +24,16 @@ def create_baseline_model():
 
 def find_best_params(model, X_train, y_train):
 
-    batch_size = [10, 20, 40, 60, 80, 100]
-    epochs = [10, 50, 100, 150, 200, 250, 300]
-    param_grid = dict(batch_size=batch_size, epochs=epochs)
+    batch_size = [int(x) for x in linspace(start=10, stop=100, num=10)]
+    epochs = [int(x) for x in linspace(start=50, stop=300, num=50)]
+    random_grid = {
+        'batch_size': batch_size,
+        'epochs': epochs
+    }
 
     # Random search of parameters
-    search = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1)
+    n_iter = len(batch_size) * len(epochs)
+    search = RandomizedSearchCV(estimator=model, param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=-1)
 
     # Fit the model
     search.fit(X_train, y_train)
@@ -52,7 +56,7 @@ if __name__ == '__main__':
 
     print('Data loaded!')
 
-    model = KerasRegressor(build_fn = create_baseline_model)
+    model = KerasRegressor(build_fn = create_baseline_model())
     best_params = find_best_params(model, X_train, y_train)
 
     hist = model.fit(
