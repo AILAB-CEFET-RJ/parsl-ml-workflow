@@ -14,30 +14,42 @@ from sklearn.model_selection import RandomizedSearchCV
 from modules.plotting.plot_service import *
 
 
-def create_baseline_model():
+def create_baseline_model(l1_units=250, l1_dp=0.2, l2_units=125, l2_dp=0.2):
      model = Sequential()
-     model.add(Dense(250, input_dim=10, kernel_initializer='normal', activation='relu'))
-     model.add(Dropout(0.2))
-     model.add(Dense(125, kernel_initializer='normal', activation='relu'))
-     model.add(Dropout(0.2))
+     model.add(Dense(l1_units, input_dim=10, kernel_initializer='normal', activation='relu'))
+     model.add(Dropout(l1_dp))
+     model.add(Dense(l2_units, kernel_initializer='normal', activation='relu'))
+     model.add(Dropout(l2_dp))
      model.add(Dense(1, kernel_initializer='normal', activation='linear'))
      model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 
      return model
 
 
-def find_best_params(model, X_train, y_train):
+def create_model(l1_units=250, l1_dp=0.2, l2_units=125, l2_dp=0.2):
+    return KerasRegressor(build_fn=create_baseline_model, l1_units=l1_units, l1_dp=l1_dp, l2_units=l2_units, l2_dp=l2_dp, verbose=2)
 
+
+def find_best_params(X_train, y_train):
     batch_size = [int(x) for x in linspace(start=10, stop=100, num=10)]
     epochs = [int(x) for x in linspace(start=50, stop=300, num=50)]
-    params = {
-        'batch_size': batch_size,
-        'epochs': epochs
-    }
+    l1_units = [int(x) for x in linspace(start=200, stop=500, num=25)]
+    l1_dp = [0.1, 0.2, 0.3]
+    l2_units = [int(x) for x in linspace(start=100, stop=250, num=25)]
+    l2_dp = [0.1, 0.2, 0.3]
+
+    params = dict(
+        batch_size = batch_size,
+        epochs = epochs,
+        l1_units = l1_units,
+        l1_dp = l1_dp,
+        l2_units = l2_units,
+        l2_dp = l2_dp
+    )
 
     # Random search of parameters
     n_iter = len(batch_size) * len(epochs)
-    search = RandomizedSearchCV(estimator=model, param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=1)
+    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=1)
 
     # Fit the model
     search.fit(X_train, y_train)
@@ -60,8 +72,8 @@ if __name__ == '__main__':
 
     print('Data loaded!')
 
-    model = KerasRegressor(build_fn = create_baseline_model, verbose=2)
-    best_params = find_best_params(model, X_train, y_train)
+    best_params = find_best_params(X_train, y_train)
+    model = create_model(best_params['l1_units'], best_params['l1_dp'], best_params['l2_units'], best_params['l2_dp'])
 
     hist = model.fit(
         X_train,
