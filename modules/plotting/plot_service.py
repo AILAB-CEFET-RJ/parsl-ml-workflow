@@ -35,6 +35,7 @@ def plot_hm(x, y, dir='../plot/', show_only=False):
 
 
 def plot_scatter(X, Y, X_val, y_val, X_test, Y_test, preds, dir='../plot/', show_only=False):
+    plt.clf()
     plt.suptitle("Infrared X Redshift", color='red')
 
     plt.subplot(221)
@@ -62,6 +63,27 @@ def plot_scatter(X, Y, X_val, y_val, X_test, Y_test, preds, dir='../plot/', show
         plt.savefig(dir + 'redshift.png')
 
 
+def plot_scatter_lr(X, Y, real, pred, dir='../plot/', show_only=False):
+    plt.clf()
+    plt.suptitle("Infrared X Redshift", color='red')
+
+    plt.scatter(X[:, 3], Y, color='black')
+    plt.plot(real, pred, color='blue', linewidth=3)
+
+    plt.xticks(())
+    plt.yticks(())
+
+    if show_only:
+        plt.show()
+    else:
+        plt.savefig(dir + 'linear_reg.png')
+
+
 def plot_table(x, y):
     t = tabulate(array([x, y]).T[:50], headers=['Real', 'Predict'], tablefmt='orgtbl')
+    print(t)
+
+
+def plot_table_cf(header, cfs):
+    t = tabulate(array([cfs]).T, headers=[header], tablefmt='orgtbl')
     print(t)
