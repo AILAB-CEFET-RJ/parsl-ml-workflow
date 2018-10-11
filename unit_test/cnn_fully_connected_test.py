@@ -30,14 +30,14 @@ def find_best_params(model, X_train, y_train):
 
     batch_size = [int(x) for x in linspace(start=10, stop=100, num=10)]
     epochs = [int(x) for x in linspace(start=50, stop=300, num=50)]
-    random_grid = {
+    params = {
         'batch_size': batch_size,
         'epochs': epochs
     }
 
     # Random search of parameters
     n_iter = len(batch_size) * len(epochs)
-    search = RandomizedSearchCV(estimator=model, param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=model, param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=-1)
 
     # Fit the model
     search.fit(X_train, y_train)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     print('Data loaded!')
 
-    model = KerasRegressor(build_fn = create_baseline_model)
+    model = KerasRegressor(build_fn = create_baseline_model, verbose=2)
     best_params = find_best_params(model, X_train, y_train)
 
     hist = model.fit(
