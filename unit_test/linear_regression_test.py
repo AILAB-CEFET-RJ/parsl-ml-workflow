@@ -24,8 +24,7 @@ if __name__ == '__main__':
     print('Data loaded!')
 
     model = LinearRegression()
-
-    hist = model.fit(X_train, y_train)
+    model.fit(X_train, y_train)
 
     preds = model.predict(X_test)
     score = model.score(X_val, y_val)
