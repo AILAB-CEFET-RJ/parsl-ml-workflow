@@ -25,7 +25,7 @@ def find_best_params(X_train, y_train):
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=2, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
         n_estimators = best_params['n_estimators'],
         max_depth = best_params['max_depth'],
         random_state = 42,
-        verbose=2,
+        verbose=1,
         n_jobs=-1
     )
 
