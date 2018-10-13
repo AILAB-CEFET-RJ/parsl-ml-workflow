@@ -87,3 +87,7 @@ def plot_table(x, y):
 def plot_table_cf(header, cfs):
     t = tabulate(array([cfs]).T, headers=[header], tablefmt='orgtbl')
     print(t)
+
+def plot_simple_table(data):
+    t = tabulate(array([data]).T, tablefmt='orgtbl')
+    print(t)

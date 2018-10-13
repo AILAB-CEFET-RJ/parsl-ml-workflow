@@ -49,7 +49,7 @@ def find_best_params(X_train, y_train):
 
     # Random search of parameters
     n_iter = len(batch_size) * len(epochs)
-    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=1)
+    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=2, random_state=42, n_jobs=-1)
 
     # Fit the model
     search.fit(X_train, y_train)
@@ -63,15 +63,16 @@ def find_best_params(X_train, y_train):
 
 if __name__ == '__main__':
 
-    train_file = '../datasets/train.csv'
+    train_file = '../datasets/redshifts.csv'
 
     X = loadtxt(train_file, usecols=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), unpack=True, delimiter=',').T
     Y = loadtxt(train_file, unpack=True, usecols=(11), delimiter=',')
 
-    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
     print('Data loaded!')
+    plot_simple_table(X_train.T[:, :30])
 
     best_params = find_best_params(X_train, y_train)
     model = create_model(best_params['l1_units'], best_params['l1_dp'], best_params['l2_units'], best_params['l2_dp'])
