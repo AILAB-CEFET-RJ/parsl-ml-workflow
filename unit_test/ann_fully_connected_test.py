@@ -27,7 +27,7 @@ def create_baseline_model(l1_units=250, l1_dp=0.2, l2_units=125, l2_dp=0.2):
 
 
 def create_model(l1_units=250, l1_dp=0.2, l2_units=125, l2_dp=0.2):
-    return KerasRegressor(build_fn=create_baseline_model, l1_units=l1_units, l1_dp=l1_dp, l2_units=l2_units, l2_dp=l2_dp, verbose=2)
+    return KerasRegressor(build_fn=create_baseline_model, l1_units=l1_units, l1_dp=l1_dp, l2_units=l2_units, l2_dp=l2_dp, verbose=1)
 
 
 def find_best_params(X_train, y_train):
@@ -86,12 +86,14 @@ if __name__ == '__main__':
         batch_size = best_params['batch_size']
     )
 
+    score = model.score(X_val, y_val)
     preds = model.predict(X_test)
 
     pred = preds.reshape(len(preds))
     real = y_test
 
     plot_table(real, pred)
+    print('Cross-Val Score:', score)
     plot_scatter(X_train, y_train, X_val, y_val, X_test, y_test, preds)
     plot(hist.history, 'mean_squared_error')
     plot_hm(real, pred)
