@@ -19,7 +19,7 @@ def find_best_params(X_train, y_train):
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=KNeighborsRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=10, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=KNeighborsRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=7, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
@@ -45,14 +45,15 @@ if __name__ == '__main__':
     best_params = find_best_params(X_train, y_train)
 
     model = KNeighborsRegressor(n_neighbors = best_params['n_neighbors'])
+    model.fit(X_train, y_train)
 
-    hist = model.fit(X_train, y_train)
     score = model.score(X_val, y_val)
     preds = model.predict(X_test)
 
     pred = preds.reshape(len(preds))
     real = y_test
 
+    plot_table(real, pred)
     plot_scatter(X_train, y_train, X_val, y_val, X_test, y_test, preds)
 
     # Compute the mean squared error of our predictions.
