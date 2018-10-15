@@ -37,8 +37,8 @@ if __name__ == '__main__':
     plot_table_cf('Coeficientes', model.coef_)
 
     print("Score: ", score)
-    print("Mean squared error: %.2f" % mean_squared_error(real, pred))
-    print('Variance score: %.2f' % r2_score(real, pred))
+    print("Mean squared error: ", mean_squared_error(real, pred))
+    print("Variance score: ", r2_score(real, pred))
 
     plot_scatter(X_train, y_train, X_val, y_val, X_test, y_test, preds)
     plot_scatter_lr(X_train, y_train, real, pred)
