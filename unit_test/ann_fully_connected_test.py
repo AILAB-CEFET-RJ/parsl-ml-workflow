@@ -32,10 +32,10 @@ def create_model(l1_units=250, l1_dp=0.2, l2_units=125, l2_dp=0.2):
 
 def find_best_params(X_train, y_train):
     batch_size = [int(x) for x in linspace(start=10, stop=100, num=10)]
-    epochs = [int(x) for x in linspace(start=50, stop=300, num=50)]
-    l1_units = [int(x) for x in linspace(start=200, stop=500, num=25)]
+    epochs = [int(x) for x in linspace(start=50, stop=300, num=6)]
+    l1_units = [int(x) for x in linspace(start=200, stop=500, num=12)]
     l1_dp = [0.1, 0.2, 0.3, 0,4, 0.6]
-    l2_units = [int(x) for x in linspace(start=100, stop=250, num=25)]
+    l2_units = [int(x) for x in linspace(start=100, stop=250, num=6)]
     l2_dp = [0.1, 0.2, 0.3, 0,4, 0.6]
 
     params = dict(

@@ -15,7 +15,7 @@ def find_best_params(X_train, y_train):
     n_estimators = [int(x) for x in linspace(start=200, stop=2500, num=10)]
 
     # max depth
-    max_depth = [int(x) for x in linspace(50, 500, num=25)]
+    max_depth = [int(x) for x in linspace(50, 500, num=20)]
 
     # create random grid
     random_grid = {

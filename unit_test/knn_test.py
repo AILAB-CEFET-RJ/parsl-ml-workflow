@@ -11,15 +11,15 @@ from modules.plotting.plot_service import *
 
 
 def find_best_params(X_train, y_train):
-    n_neighbors = [int(x) for x in linspace(start=3, stop=30, num=3)]
+    n_neighbors = [int(x) for x in linspace(start=3, stop=30, num=10)]
 
     # create random grid
-    random_grid = {
+    param_grid = {
         'n_neighbors': n_neighbors
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=KNeighborsRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=KNeighborsRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=10, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
