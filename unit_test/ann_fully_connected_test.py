@@ -48,8 +48,7 @@ def find_best_params(X_train, y_train):
     )
 
     # Random search of parameters
-    n_iter = len(batch_size) * len(epochs) * len(l1_units) * len(l1_dp) * len(l2_units) * len(l2_dp)
-    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
 
     # Fit the model
     search.fit(X_train, y_train)

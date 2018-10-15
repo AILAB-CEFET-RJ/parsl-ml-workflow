@@ -15,8 +15,7 @@ def find_best_params(X_train, y_train):
     n_estimators = [int(x) for x in linspace(start=200, stop=2500, num=10)]
 
     # max depth
-    max_depth = [int(x) for x in linspace(100, 500, num=11)]
-    max_depth.append(None)
+    max_depth = [int(x) for x in linspace(50, 500, num=25)]
 
     # create random grid
     random_grid = {
@@ -25,8 +24,7 @@ def find_best_params(X_train, y_train):
     }
 
     # Random search of parameters
-    n_iter = len(n_estimators) * len(max_depth)
-    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=n_iter, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
