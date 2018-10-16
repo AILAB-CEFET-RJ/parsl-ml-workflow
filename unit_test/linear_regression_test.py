@@ -8,7 +8,29 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
+from sklearn.model_selection import RandomizedSearchCV
+
 from modules.plotting.plot_service import *
+
+
+def find_best_params(X_train, y_train):
+
+    n_estimators = [int(x) for x in linspace(start=200, stop=2500, num=10)]
+
+    # create random grid
+    param_grid = {
+        '???': n_estimators
+    }
+
+    # Random search of parameters
+    search = RandomizedSearchCV(estimator=LinearRegression(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    # Fit the model
+    search.fit(X_train, y_train)
+
+    # print results
+    print('Best Params:', search.best_params_)
+
+    return search.best_params_
 
 
 if __name__ == '__main__':
@@ -24,7 +46,11 @@ if __name__ == '__main__':
     print('Data loaded!')
     plot_simple_table(X_train.T[:, :30])
 
-    model = LinearRegression()
+    best_params = find_best_params(X_train, y_train)
+
+    model = LinearRegression(
+        n_jobs=-1
+    )
     model.fit(X_train, y_train)
 
     preds = model.predict(X_test)
