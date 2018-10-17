@@ -35,7 +35,7 @@ def find_best_params(X_train, y_train):
     epochs = [int(x) for x in linspace(start=50, stop=300, num=6)]
     l1_units = [int(x) for x in linspace(start=200, stop=500, num=12)]
     l1_dp = [0.1, 0.2, 0.3, 0,4, 0.6]
-    l2_units = [int(x) for x in linspace(start=100, stop=250, num=6)]
+    l2_units = [int(x) for x in linspace(start=100, stop=500, num=15)]
     l2_dp = [0.1, 0.2, 0.3, 0,4, 0.6]
 
     params = dict(
@@ -76,13 +76,16 @@ if __name__ == '__main__':
     best_params = find_best_params(X_train, y_train)
     model = create_model(best_params['l1_units'], best_params['l1_dp'], best_params['l2_units'], best_params['l2_dp'])
 
+    plot_losses = ann_plot_losses_callback()
+
     hist = model.fit(
         X_train,
         y_train,
         verbose=1,
         validation_data = (X_val, y_val),
         epochs = best_params['epochs'],
-        batch_size = best_params['batch_size']
+        batch_size = best_params['batch_size'],
+        callbacks=[plot_losses]
     )
 
     score = model.score(X_val, y_val)

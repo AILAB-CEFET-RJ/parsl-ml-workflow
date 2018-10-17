@@ -4,6 +4,7 @@ from numpy import array
 from tabulate import tabulate
 
 from matplotlib.ticker import NullFormatter
+from modules.plotting.plot_losses_callback import PlotLossesCallback
 
 
 def plot(h, metric, dir='../plot/', show_only=False):
@@ -91,3 +92,10 @@ def plot_table_cf(header, cfs):
 def plot_simple_table(data):
     t = tabulate(array([data]).T, tablefmt='orgtbl')
     print(t)
+
+def ann_plot_losses_callback(dir='../plot/', show_only=False):
+    cb = PlotLossesCallback()
+    cb.set_show_only(show_only)
+    cb.set_output_file_dir(dir)
+
+    return cb
