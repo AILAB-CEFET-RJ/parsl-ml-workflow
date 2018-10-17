@@ -37,6 +37,8 @@ class PlotLossesCallback(keras.callbacks.Callback):
 
     def on_train_end(self, logs={}):
         self.stds = array(self.stds)
+        self.val_stds = array(self.val_stds)
+
         self.fig.fill_between(self.stds[:, 0], self.stds[:, 1], self.stds[:, 2], alpha=0.1, color="r")
         self.fig.fill_between(self.val_stds[:, 0], self.val_stds[:, 1], self.val_stds[:, 2], alpha=0.1, color="g")
 
@@ -63,10 +65,10 @@ class PlotLossesCallback(keras.callbacks.Callback):
             test_scores_mean = mean(self.val_losses)
             test_scores_std = std(self.val_losses)
 
-            shap = shape(self.losses)
+            shap = shape(self.losses)[0]
             self.stds.append([shap, train_scores_mean - train_scores_std, train_scores_mean + train_scores_std, train_scores_mean])
 
-            val_shap = shape(self.val_losses)
+            val_shap = shape(self.val_losses)[0]
             self.val_stds.append([val_shap, test_scores_mean - test_scores_std, test_scores_mean + test_scores_std, test_scores_mean])
 
 
