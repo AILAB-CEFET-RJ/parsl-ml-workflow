@@ -77,6 +77,7 @@ if __name__ == '__main__':
     model = create_model(best_params['l1_units'], best_params['l1_dp'], best_params['l2_units'], best_params['l2_dp'])
 
     plot_losses = ann_plot_losses_callback()
+    tensorboard = ann_tensorboard_callback()
 
     hist = model.fit(
         X_train,
@@ -85,7 +86,7 @@ if __name__ == '__main__':
         validation_data = (X_val, y_val),
         epochs = best_params['epochs'],
         batch_size = best_params['batch_size'],
-        callbacks=[plot_losses]
+        callbacks=[tensorboard, plot_losses]
     )
 
     score = model.score(X_val, y_val)

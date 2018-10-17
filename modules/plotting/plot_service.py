@@ -6,6 +6,8 @@ from tabulate import tabulate
 from matplotlib.ticker import NullFormatter
 from modules.plotting.plot_losses_callback import PlotLossesCallback
 
+from keras.callbacks import TensorBoard
+
 
 def plot(h, metric, dir='../plot/', show_only=False):
     fig, ax = plt.subplots()
@@ -99,3 +101,6 @@ def ann_plot_losses_callback(dir='../plot/', show_only=False):
     cb.set_output_file_dir(dir)
 
     return cb
+
+def ann_tensorboard_callback():
+    return TensorBoard(log_dir='../board', histogram_freq=0, write_graph=True, write_images=True)
