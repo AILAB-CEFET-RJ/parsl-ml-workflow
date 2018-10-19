@@ -6,7 +6,7 @@
 
 ## Florestas Aleatóreas
 
-| ![](adhafera/rf/redshift.png) | ![](adhafera/rf/hm.png) |      N/A : mean_squaded_error!       |
+| ![](adhafera/rf/redshift.png) | ![](adhafera/rf/hm.png) |      Cross-Val Score: 0.918767764001932 Accuracy: 77.79 %.       |
 |----|----|----|
 
 ## Regressão Linear
