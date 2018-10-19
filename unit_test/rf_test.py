@@ -12,10 +12,10 @@ from modules.plotting.plot_service import *
 
 def find_best_params(X_train, y_train):
     # number of trees in random forest
-    n_estimators = [int(x) for x in linspace(start=200, stop=2500, num=10)]
+    n_estimators = [int(x) for x in linspace(start=200, stop=1000, num=10)]
 
     # max depth
-    max_depth = [int(x) for x in linspace(50, 500, num=20)]
+    max_depth = [int(x) for x in linspace(50, 300, num=20)]
 
     # create random grid
     random_grid = {
