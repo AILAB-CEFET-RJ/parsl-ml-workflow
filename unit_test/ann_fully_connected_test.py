@@ -11,6 +11,7 @@ from keras.optimizers import Adam
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import learning_curve
 
 from modules.plotting.plot_service import *
 
@@ -63,6 +64,20 @@ def find_best_params(X_train, y_train):
     return search.best_params_
 
 
+def build_learning_data(model, X, y):
+    train_sizes, train_scores, test_scores = learning_curve(model, X, y, cv=10, scoring='neg_mean_squared_error', n_jobs=-1, train_sizes=linspace(0.01, 1.0, 50))
+
+    # Create means and standard deviations of training set scores
+    train_mean = np.mean(train_scores, axis=1)
+    train_std = np.std(train_scores, axis=1)
+
+    # Create means and standard deviations of test set scores
+    test_mean = np.mean(test_scores, axis=1)
+    test_std = np.std(test_scores, axis=1)
+
+    return train_sizes, train_mean, train_std, test_mean, test_std
+
+
 if __name__ == '__main__':
 
     train_file = '../datasets/redshifts.csv'
@@ -102,4 +117,7 @@ if __name__ == '__main__':
     plot_scatter(X_train, y_train, X_val, y_val, X_test, y_test, preds)
     plot(hist.history, 'mean_squared_error')
     plot_hm(real, pred)
+
+    train_sizes, train_mean, train_std, test_mean, test_std = build_learning_data(model, X, Y)
+    plot_curves(train_sizes, train_mean, train_std, test_mean, test_std)
 

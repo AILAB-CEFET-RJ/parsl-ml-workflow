@@ -104,3 +104,29 @@ def ann_plot_losses_callback(dir='../plot/', show_only=False):
 
 def ann_tensorboard_callback():
     return TensorBoard(log_dir='../board', histogram_freq=0, write_graph=True, write_images=True)
+
+
+def plot_curves(train_sizes, train_mean, train_std, test_mean, test_std, dir='../plot/', show_only=False):
+
+    plt.figure()
+    plt.title("Learning Curves")
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_mean - train_std,
+                     train_mean + train_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_mean - test_std,
+                     test_mean + test_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+
+    if show_only:
+        plt.show()
+    else:
+        plt.savefig(dir + 'curves.png')
