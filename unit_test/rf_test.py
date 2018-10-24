@@ -12,11 +12,10 @@ from modules.plotting.plot_service import *
 
 def find_best_params(X_train, y_train):
     # number of trees in random forest
-    n_estimators = [int(x) for x in linspace(start=200, stop=1000, num=10)]
+    n_estimators = random.randint(low=200, high=1000, size=10)
 
     # max depth
-    max_depth = [int(x) for x in linspace(50, 300, num=20)]
-
+    max_depth = random.randint(low=50, high=300, size=20)
     # create random grid
     random_grid = {
         'n_estimators': n_estimators,
@@ -24,7 +23,7 @@ def find_best_params(X_train, y_train):
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=RandomForestRegressor(), param_distributions=random_grid, scoring='neg_mean_squared_error', n_iter=30, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
