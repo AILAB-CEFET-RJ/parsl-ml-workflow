@@ -94,7 +94,6 @@ if __name__ == '__main__':
     best_params = find_best_params(X_train, y_train)
     model = create_model(best_params['l1_units'], best_params['l1_dp'], best_params['l2_units'], best_params['l2_dp'], best_params['lr'])
 
-    plot_losses = ann_plot_losses_callback()
     tensorboard = ann_tensorboard_callback()
 
     hist = model.fit(
@@ -103,7 +102,7 @@ if __name__ == '__main__':
         verbose=1,
         validation_data = (X_val, y_val),
         epochs = 300,
-        callbacks=[tensorboard, plot_losses]
+        callbacks=[tensorboard]
     )
 
     score = model.score(X_val, y_val)
