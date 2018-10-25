@@ -65,15 +65,15 @@ def find_best_params(X_train, y_train):
 
 
 def build_learning_data(model, X, y):
-    train_sizes, train_scores, test_scores = learning_curve(model, X, y, cv=10, scoring='neg_mean_squared_error', n_jobs=-1, train_sizes=linspace(0.01, 1.0, 50))
+    train_sizes, train_scores, test_scores = learning_curve(model, X, y, cv=3, scoring='neg_mean_squared_error', train_sizes=linspace(0.01, 1.0, 50))
 
     # Create means and standard deviations of training set scores
-    train_mean = np.mean(train_scores, axis=1)
-    train_std = np.std(train_scores, axis=1)
+    train_mean = mean(train_scores, axis=1)
+    train_std = std(train_scores, axis=1)
 
     # Create means and standard deviations of test set scores
-    test_mean = np.mean(test_scores, axis=1)
-    test_std = np.std(test_scores, axis=1)
+    test_mean = mean(test_scores, axis=1)
+    test_std = std(test_scores, axis=1)
 
     return train_sizes, train_mean, train_std, test_mean, test_std
 
@@ -117,6 +117,6 @@ if __name__ == '__main__':
     plot(hist.history, 'mean_squared_error')
     plot_hm(real, pred)
 
-    train_sizes, train_mean, train_std, test_mean, test_std = build_learning_data(model, X, Y)
+    train_sizes, train_mean, train_std, test_mean, test_std = build_learning_data(model, X_train, y_train)
     plot_curves(train_sizes, train_mean, train_std, test_mean, test_std)
 
