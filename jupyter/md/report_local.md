@@ -43,7 +43,7 @@
 
 ## K-Vizinhos mais próximos
 
-| ![](local/knn/redshift.png) | ![](local/knn/hm.png) |      mean_squaded_error = 0.00119656851409       |
+| ![](local/knn/redshift.png) | ![](local/knn/hm.png) |      mean_squaded_error = 0.0011674860537731718       |
 |----|----|----|
 
 ## Regressão Linear
