@@ -48,5 +48,5 @@
 
 ## Regressão Linear
 
-| ![](local/lr/redshift.png) | ![](local/lr/hm.png) |      mean_squaded_error = 0.002415116132477088       |
+| ![](local/lr/redshift.png) | ![](local/lr/hm.png) |      mean_squaded_error = 0.0024200070183046925       |
 |----|----|----|

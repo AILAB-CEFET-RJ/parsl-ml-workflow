@@ -14,18 +14,19 @@ from modules.plotting.plot_service import *
 
 
 def find_best_params(X_train, y_train):
-    learning_rate = ['optimal', 'invscaling', 'adaptive']
     eta0 = random.uniform(low=0.00001, high=0.001, size=10)
+    alpha = random.uniform(low=0.001, high=0.01, size=5)
 
 
     # create random grid
     param_grid = {
-        'learning_rate': learning_rate,
-        'eta0': eta0
+        'learning_rate': ['optimal', 'invscaling'],
+        'eta0': eta0,
+        'alpha': alpha
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=SGDRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=20, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=SGDRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=60, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
@@ -53,7 +54,8 @@ if __name__ == '__main__':
     model = SGDRegressor(
         learning_rate=best_params['learning_rate'],
         eta0=best_params['eta0'],
-        max_iter=300,
+        alpha=best_params['alpha'],
+        max_iter=700,
         random_state=42
     )
     model.fit(X_train, y_train)
