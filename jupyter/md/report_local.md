@@ -41,7 +41,7 @@
 | ![](local/rf/redshift.png) | ![](local/rf/hm.png) |      N/A : mean_squaded_error!       |
 |----|----|----|
 
-## K-Vizinhos mais pŕximos
+## K-Vizinhos mais próximos
 
 | ![](local/knn/redshift.png) | ![](local/knn/hm.png) |      mean_squaded_error = 0.00119656851409       |
 |----|----|----|
