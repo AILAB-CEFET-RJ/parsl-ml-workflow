@@ -26,7 +26,7 @@ def plot(h, metric, dir='../plot/', show_only=False):
 
 def plot_hm(x, y, dir='../plot/', show_only=False):
     heatmap, xedges, yedges = histogram2d(x, y, bins=500)
-    extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
+    extent = [-0.2, 1.0, -0.2, 1.0]
 
     plt.clf()
     plt.imshow(heatmap.T, extent=extent, origin='lower')
