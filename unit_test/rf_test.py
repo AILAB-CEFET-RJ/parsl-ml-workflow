@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import mean_squared_error
 
 from modules.plotting.plot_service import *
 
@@ -75,6 +76,7 @@ if __name__ == '__main__':
     mape = 100 * (errors / real)
     accuracy = 100 - mean(mape)
     print('Accuracy:', round(accuracy, 2), '%.')
+    print('Mean Squaded Error:', mean_squared_error(y_test, pred))
 
     plot_hm(real, pred)
 
