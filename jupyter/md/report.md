@@ -7,11 +7,11 @@
 |----|----|
 | ANN| KNN|
 |----|----|
-|     ![](adharefa/ann/redshift.png)     |     ![](adharefa/knn/redshift.png) |
+|     ![](adhafera/ann/redshift.png)     |     ![](adhafera/knn/redshift.png) |
 |----|----|
 | RForest | LReg |
 |----|----|
-|         ![](adharefa/rf/redshift.png)  |      ![](adharefa/lr/redshift.png) |
+|         ![](adhafera/rf/redshift.png)  |      ![](adhafera/lr/redshift.png) |
 |----|----|
 
 
@@ -22,31 +22,31 @@
 |----|----|
 | ANN| KNN|
 |----|----|
-| ![](adharefa/ann/hm.png) | ![](adharefa/knn/hm.png) |
+| ![](adhafera/ann/hm.png) | ![](adhafera/knn/hm.png) |
 |-----------------------------|-----------------------------|
 | RForest | LReg |
 |----|----|
-| ![](adharefa/rf/hm.png)  | ![](adharefa/lr/hm.png)  |
+| ![](adhafera/rf/hm.png)  | ![](adhafera/lr/hm.png)  |
 |-----------------------------|-----------------------------|
 
 # Por Modelo
 
 ## Redes Neurais
 
-| ![](adharefa/ann/redshift.png) | ![](adharefa/ann/hm.png) | ![](adharefa/ann/mse.png) |
+| ![](adhafera/ann/redshift.png) | ![](adhafera/ann/hm.png) | ![](adhafera/ann/mse.png) |
 |----|----|----|
 
 ## Florestas Aleatóreas
 
-| ![](adharefa/rf/redshift.png) | ![](adharefa/rf/hm.png) |      mean_squaded_error = ?       |
+| ![](adhafera/rf/redshift.png) | ![](adhafera/rf/hm.png) |      mean_squaded_error = ?       |
 |----|----|----|
 
 ## K-Vizinhos mais próximos
 
-| ![](adharefa/knn/redshift.png) | ![](adharefa/knn/hm.png) |      mean_squaded_error = ?       |
+| ![](adhafera/knn/redshift.png) | ![](adhafera/knn/hm.png) |      mean_squaded_error = ?       |
 |----|----|----|
 
 ## Regressão Linear
 
-| ![](adharefa/lr/redshift.png) | ![](adharefa/lr/hm.png) |      mean_squaded_error = 0.002471       |
+| ![](adhafera/lr/redshift.png) | ![](adhafera/lr/hm.png) |      mean_squaded_error = 0.002471       |
 |----|----|----|
