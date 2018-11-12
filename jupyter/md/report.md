@@ -35,6 +35,10 @@
 
 | ![](adhafera/ann/redshift.png) | ![](adhafera/ann/hm.png) | ![](adhafera/ann/mse.png) mean_squaded_error = 0.001099|
 |----|----|----|
+| ![](adhafera/ann/curves.png) [1]|  | |
+|----|----|----|
+1. ANN: 2 camadas, com 175 unidades na camada 1 e 151 na camada 2 [dropout=0.1].
+
 
 ## Florestas Aleatóreas
 
