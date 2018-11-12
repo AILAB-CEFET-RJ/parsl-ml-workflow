@@ -4,7 +4,6 @@ from numpy import array
 from tabulate import tabulate
 
 from matplotlib.ticker import NullFormatter
-from modules.plotting.plot_losses_callback import PlotLossesCallback
 
 from keras.callbacks import TensorBoard
 
@@ -26,7 +25,7 @@ def plot(h, metric, dir='../plot/', show_only=False):
 
 def plot_hm(x, y, dir='../plot/', show_only=False):
     heatmap, xedges, yedges = histogram2d(x, y, bins=500)
-    extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
+    extent = [-0.2, 1.0, -0.2, 1.0]
 
     plt.clf()
     plt.imshow(heatmap.T, extent=extent, origin='lower')
@@ -94,13 +93,6 @@ def plot_table_cf(header, cfs):
 def plot_simple_table(data):
     t = tabulate(array([data]).T, tablefmt='orgtbl')
     print(t)
-
-def ann_plot_losses_callback(dir='../plot/', show_only=False):
-    cb = PlotLossesCallback()
-    cb.set_show_only(show_only)
-    cb.set_output_file_dir(dir)
-
-    return cb
 
 def ann_tensorboard_callback():
     return TensorBoard(log_dir='../board', histogram_freq=0, write_graph=True, write_images=True)

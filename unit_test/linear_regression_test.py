@@ -4,7 +4,7 @@ mpl.use('Agg')
 from numpy import *
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import SGDRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 
@@ -14,16 +14,19 @@ from modules.plotting.plot_service import *
 
 
 def find_best_params(X_train, y_train):
+    eta0 = random.uniform(low=0.00001, high=0.001, size=10)
+    alpha = random.uniform(low=0.001, high=0.01, size=5)
 
-    n_estimators = [int(x) for x in linspace(start=200, stop=2500, num=10)]
 
     # create random grid
     param_grid = {
-        '???': n_estimators
+        'learning_rate': ['optimal', 'invscaling'],
+        'eta0': eta0,
+        'alpha': alpha
     }
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=LinearRegression(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=100, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=SGDRegressor(), param_distributions=param_grid, scoring='neg_mean_squared_error', n_iter=60, cv=3, verbose=1, random_state=42, n_jobs=-1)
     # Fit the model
     search.fit(X_train, y_train)
 
@@ -48,8 +51,12 @@ if __name__ == '__main__':
 
     best_params = find_best_params(X_train, y_train)
 
-    model = LinearRegression(
-        n_jobs=-1
+    model = SGDRegressor(
+        learning_rate=best_params['learning_rate'],
+        eta0=best_params['eta0'],
+        alpha=best_params['alpha'],
+        max_iter=700,
+        random_state=42
     )
     model.fit(X_train, y_train)
 
