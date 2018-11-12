@@ -31,7 +31,7 @@ def create_baseline_model(l1_units=300, l1_dp=0.1, l2_units=150, l2_dp=0.05, lr=
 
 
 def create_model(l1_units=300, l1_dp=0.1, l2_units=150, l2_dp=0.05, lr=0.001 ):
-    return KerasRegressor(build_fn=create_baseline_model, l1_units=l1_units, l1_dp=l1_dp, l2_units=l2_units, l2_dp=l2_dp, lr=lr, verbose=1)
+    return KerasRegressor(build_fn=create_baseline_model, l1_units=l1_units, l1_dp=l1_dp, l2_units=l2_units, l2_dp=l2_dp, lr=lr, verbose=0)
 
 
 def find_best_params(X_train, y_train):
@@ -52,7 +52,7 @@ def find_best_params(X_train, y_train):
     )
 
     # Random search of parameters
-    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=30, cv=3, verbose=1, random_state=42, n_jobs=-1)
+    search = RandomizedSearchCV(estimator=create_model(), param_distributions=params, scoring='neg_mean_squared_error', n_iter=30, cv=3, verbose=0, random_state=42, n_jobs=-1)
 
     # Fit the model
     search.fit(X_train, y_train)
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     hist = model.fit(
         X_train,
         y_train,
-        verbose=1,
+        verbose=0,
         validation_data = (X_val, y_val),
         epochs = 300,
         callbacks=[tensorboard]
