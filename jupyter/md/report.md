@@ -33,7 +33,7 @@
 
 ## Redes Neurais
 
-| ![](adhafera/ann/redshift.png) | ![](adhafera/ann/hm.png) | ![](adhafera/ann/mse.png) |
+| ![](adhafera/ann/redshift.png) | ![](adhafera/ann/hm.png) | ![](adhafera/ann/mse.png) mean_squaded_error = 0.001099|
 |----|----|----|
 
 ## Florestas Aleatóreas
