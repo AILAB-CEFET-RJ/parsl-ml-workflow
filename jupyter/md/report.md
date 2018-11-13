@@ -42,7 +42,7 @@
 
 ## Florestas Aleatóreas
 
-| ![](adhafera/rf/redshift.png) | ![](adhafera/rf/hm.png) |      mean_squaded_error = ?       |
+| ![](adhafera/rf/redshift.png) | ![](adhafera/rf/hm.png) |      mean_squaded_error = 0.001070       |
 |----|----|----|
 
 ## K-Vizinhos mais próximos
