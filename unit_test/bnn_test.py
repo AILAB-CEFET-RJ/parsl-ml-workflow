@@ -2,6 +2,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import pkg_resources
+pkg_resources.require("tensorflow==1.7")
+
 import edward as ed
 import matplotlib.pyplot as plt
 import numpy as np
