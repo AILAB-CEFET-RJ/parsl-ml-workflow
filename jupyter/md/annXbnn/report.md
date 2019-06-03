@@ -6,14 +6,9 @@
 |  Infrared x Redshift  |    |
 |----|----|
 | Pura| BN|
-|----|----|
 |     ![](pure.png)     |     ![](bn.png) |
-|----|----|
 | Dropout | BN Dropout|
-|----|----|
 |         ![](dp.png)  |      ![](dpbn.png) |
-|----|----|
-
 
 
 ## HeatMap 
@@ -21,13 +16,9 @@
 |  Predito x Real  |    |
 |----|----|
 | Pura| BN|
-|----|----|
 |     ![](pure_hm.png)     |     ![](bn_hm.png) |
-|----|----|
 | Dropout | BN Dropout|
-|----|----|
 |         ![](dp_hm.png)  |      ![](dpbn_hm.png) |
-|----|----|
 
 ## Dados 
 
