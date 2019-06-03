@@ -1,6 +1,16 @@
 
 # BNN
 
+## MSE 
+
+|   |    |
+|----|----|
+| Pura| BN|
+|     0.2776203     |     0 |
+| Dropout | BN Dropout|
+|         0  |      0 |
+
+
 ## Distribuição 
 
 |  Infrared x Redshift  |    |
