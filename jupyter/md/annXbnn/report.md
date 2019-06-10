@@ -10,6 +10,18 @@
 | Dropout | BN Dropout|
 |         0.04186037  |      278.25867 |
 
+### Melhor resultado
+Usando a técnica de dropout: 
+
+(kp=0.75)
+
+MSE em 10 experimentos
+````
+0.020203365, 0.05111794,  0.124432035, 0.11397301, 0.054242108,
+0.03168174,  0.019679347, 0.04463508,  0.07244529, 0.05915665722222222
+````
+Melhor resultado: `0.019679347`
+
 
 ## Distribuição 
 
