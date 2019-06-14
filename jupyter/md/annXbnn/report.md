@@ -22,6 +22,10 @@ MSE em 10 experimentos
 ````
 Melhor resultado: `0.019679347`
 
+Média em 10 resultados: `0.05915665722222222`
+
+Desvio padrão em 10 resultados: `0.034018573286292965`
+
 
 ## Distribuição 
 
