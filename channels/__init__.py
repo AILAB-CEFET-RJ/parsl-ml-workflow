@@ -1,1 +1,1 @@
-from .SSHIteractiveChannel import SSHIteractiveChannel
+from .SSHChannelCustom import SSHChannelCustom

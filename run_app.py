@@ -5,7 +5,8 @@ from parsl.app.app import python_app, bash_app
 from parsl.config import Config
 from parsl.providers import LocalProvider
 from parsl.channels import LocalChannel
-from channels import SSHIteractiveChannel
+from channels import SSHChannelCustom
+from parsl.channels import SSHChannel
 from parsl.executors import HighThroughputExecutor
 from parsl.addresses import address_by_hostname
 
@@ -75,7 +76,7 @@ def executionConfig(hostname, port, username, passwd):
             )
         ])
 
-    ssh_config = SSHIteractiveChannel(hostname=hostname, username=username, password=passwd, port=port)
+    ssh_config = SSHChannelCustom(hostname=hostname, username=username, password=passwd, port=port)
     config.executors[0].provider.channel = ssh_config
 
     return config
