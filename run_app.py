@@ -50,20 +50,43 @@ def run():
     print("... config loaded!")
 
     data = build_dataset()
+    data_b = pickle.dumps(data)
     print("... dataset loaded!")
 
     times = []
     for i in range(0, 3):
         ts = datetime.datetime.now()
 
-        master = runMaster(pickle.dumps(data), [*range(1, 16)])
-        tauri = runTauri(pickle.dumps(data), [*range(15, 31)])
+        master0 = runMaster(data_b, [*range(1, 3)])
+        master1 = runMaster(data_b, [*range(3, 5)])
+        master2 = runMaster(data_b, [*range(5, 7)])
+        master3 = runMaster(data_b, [*range(7, 9)])
+        master4 = runMaster(data_b, [*range(9, 11)])
 
-        outputs = [i.result() for i in [master, tauri]]
+        tauri0 = runTauri(data_b, [*range(11, 13)])
+        tauri1 = runTauri(data_b, [*range(13, 15)])
+        tauri2 = runTauri(data_b, [*range(15, 17)])
+        tauri3 = runTauri(data_b, [*range(17, 19)])
+        tauri4 = runTauri(data_b, [*range(19, 21)])
+
+        adh0 = runAdhafera(data_b, [*range(16, 23)])
+        adh1 = runAdhafera(data_b, [*range(23, 25)])
+        adh2 = runAdhafera(data_b, [*range(25, 27)])
+        adh3 = runAdhafera(data_b, [*range(27, 29)])
+        adh4 = runAdhafera(data_b, [*range(29, 31)])
+
+        print("Waiting results ...")
+        outputs = [i.result() for i in [
+            master0, master1, master2, master3, master4,
+            tauri0, tauri1, tauri2, tauri3, tauri4,
+            adh0, adh1, adh2, adh3, adh4
+        ]]
 
         print(outputs)
         ts = datetime.datetime.now() - ts
         times.append(ts)
+
+    print("times: " + str(times))
 
     mean = np.mean(times)
     print("elapsed mean: " + str(mean))
@@ -119,7 +142,7 @@ def executionConfig(hostname, port, username, passwd, shared_dir):
                 label="tauri_htex",
                 cores_per_worker=1,
                 mem_per_worker=0.35,
-                max_workers=1,
+                max_workers=6,
                 worker_debug=True,
                 working_dir= shared_dir,
                 worker_logdir_root=shared_dir,
@@ -135,7 +158,7 @@ def executionConfig(hostname, port, username, passwd, shared_dir):
                 label="adhafera_htex",
                 cores_per_worker=1,
                 mem_per_worker=0.35,
-                max_workers=1,
+                max_workers=6,
                 worker_debug=True,
                 working_dir=shared_dir,
                 worker_logdir_root=shared_dir,
@@ -151,7 +174,7 @@ def executionConfig(hostname, port, username, passwd, shared_dir):
                 label="master_htex",
                 cores_per_worker=1,
                 mem_per_worker=0.35,
-                max_workers=1,
+                max_workers=6,
                 worker_debug=True,
                 address=address_by_hostname(),
                 provider=LocalProvider(
