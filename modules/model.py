@@ -102,7 +102,7 @@ def runRForest(inputs, hp):
             max_depth=max_depth,
             random_state=42,
             verbose=1,
-            n_jobs=-1
+            n_jobs=1
         )
 
         model.fit(data["x_train"], data["y_train"])
