@@ -187,7 +187,7 @@ def runANN(inputs, hp):
 
 def create_baseline_model(l1_units=300, l1_dp=0.1, l2_units=150, l2_dp=0.05, lr=0.001):
     model = Sequential()
-    model.add(Dense(l1_units, input_dim=10, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(l1_units, input_dim=5, kernel_initializer='normal', activation='relu'))
     model.add(Dropout(l1_dp))
     model.add(Dense(l2_units, kernel_initializer='normal', activation='relu'))
     model.add(Dropout(l2_dp))

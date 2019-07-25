@@ -14,8 +14,7 @@ def split_dataset(train_file):
 
     return X_train, y_train, X_test, y_test, X_val, y_val
 
-def build_dataset():
-    train_file = '/home/rfialho/shared/datasets/redshifts.csv'
+def build_dataset(train_file='/home/rfialho/shared/datasets/redshifts.csv'):
 
     x = np.loadtxt(train_file, usecols=(range(1, 6)), unpack=True, delimiter=',', dtype='float32').T
     y = np.loadtxt(train_file, unpack=True, usecols=(11), delimiter=',', dtype='float32')
