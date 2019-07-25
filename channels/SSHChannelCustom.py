@@ -26,7 +26,7 @@ class SSHChannelCustom(Channel, RepresentationMixin):
 
     '''
 
-    def __init__(self, hostname, username=None, password=None, script_dir=None, envs=None, gssapi_auth=False, skip_auth=False, port=22, **kwargs):
+    def __init__(self, hostname, username=None, password=None, script_dir=None, envs=None, gssapi_auth=False, skip_auth=False, port=22, timeout=None, **kwargs):
         ''' Initialize a persistent connection to the remote system.
         We should know at this point whether ssh connectivity is possible
 
@@ -47,6 +47,7 @@ class SSHChannelCustom(Channel, RepresentationMixin):
         self.username = username
         self.password = password
         self.port = port
+        self.timeout = timeout
         self.kwargs = kwargs
         self.script_dir = script_dir
         self.skip_auth = skip_auth
@@ -68,7 +69,8 @@ class SSHChannelCustom(Channel, RepresentationMixin):
                 hostname,
                 username=username,
                 password=password,
-                port= port,
+                port=port,
+                timeout=timeout,
                 allow_agent=True,
                 gss_auth=gssapi_auth,
                 gss_kex=gssapi_auth,

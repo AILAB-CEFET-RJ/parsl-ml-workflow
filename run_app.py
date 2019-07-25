@@ -24,9 +24,9 @@ def runMaster(inputs, hp):
 #woker job
 @python_app(executors=["tauri_htex"])
 def runTauri(inputs, hp):
-    from modules.model import runRForest
+    from modules.model import runANN
 
-    return runRForest(inputs, hp)
+    return runANN(inputs, hp)
 
     
 #woker job
@@ -66,11 +66,15 @@ def run():
         #master3 = runMaster(data_b, [*range(7, 9)])
         #master4 = runMaster(data_b, [*range(9, 11)])
 
-        tauri0 = runTauri(None, zip(np.random.randint(low=200, high=1000, size=10), np.random.randint(low=50, high=300, size=10)))
-        #tauri1 = runTauri(data_b, [*range(13, 15)])
-        #tauri2 = runTauri(data_b, [*range(15, 17)])
-        #tauri3 = runTauri(data_b, [*range(17, 19)])
-        #tauri4 = runTauri(data_b, [*range(19, 21)])
+        #tauri0 = runTauri(None, zip(np.random.randint(low=80, high=100, size=8), np.random.randint(low=50, high=70, size=8)))
+        tauri0 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri1 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri2 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri3 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri4 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri5 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri6 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
+        tauri7 = runTauri(None, zip(np.random.randint(low=80, high=100, size=1), np.random.randint(low=50, high=70, size=1)))
 
         #adh0 = runAdhafera(data_b, [*np.arange(0.001, 0.01, 0.001)])
         #adh1 = runAdhafera(data_b, [*range(23, 25)])
@@ -81,7 +85,7 @@ def run():
         print("Waiting results ...")
         outputs = [i.result() for i in [
             #master0, #master1, master2, master3, master4,
-            tauri0, #tauri1, tauri2, tauri3, tauri4,
+            tauri0, tauri1, tauri2, tauri3, tauri4,tauri5, tauri6, tauri7,
             #adh0, #adh1, adh2, adh3, adh4
         ]]
 
@@ -111,16 +115,19 @@ def executionConfig(hostname, port, username, passwd, shared_dir):
                             "--hb_period={heartbeat_period} "
                             "--hb_threshold={heartbeat_threshold} ")
 
-    tauri_sshChannel = SSHChannelCustom(hostname=hostname[0], username=username, password=passwd, port=port, script_dir=shared_dir)
-    adhafera_sshChannel = SSHChannelCustom(hostname=hostname[1], username=username, password=passwd, port=port, script_dir=shared_dir)
+    timeout = 86400.0
+
+    tauri_sshChannel = SSHChannelCustom(hostname=hostname[0], username=username, password=passwd, port=port, script_dir=shared_dir, timeout=timeout)
+    adhafera_sshChannel = SSHChannelCustom(hostname=hostname[1], username=username, password=passwd, port=port, script_dir=shared_dir, timeout=timeout)
 
     config = Config(
+        strategy=None,
         executors=[
             HighThroughputExecutor(
                 label="tauri_htex",
                 cores_per_worker=1,
-                mem_per_worker=1,
-                max_workers=1,
+                mem_per_worker=2,
+                max_workers=10,
                 worker_debug=True,
                 working_dir= shared_dir,
                 worker_logdir_root=shared_dir,
@@ -128,37 +135,45 @@ def executionConfig(hostname, port, username, passwd, shared_dir):
                 interchange_port_range=(48000, 55000),
                 address="localhost",
                 provider = LocalProvider(
-                     channel=tauri_sshChannel
+                    channel=tauri_sshChannel,
+                    cmd_timeout=timeout,
+                    init_blocks=1,
+                    nodes_per_block=10,
+                    max_blocks=1
                 ),
                 launch_cmd=(cmd),
             ),
-            HighThroughputExecutor(
-                label="adhafera_htex",
-                cores_per_worker=1,
-                mem_per_worker=0.35,
-                max_workers=6,
-                worker_debug=True,
-                working_dir=shared_dir,
-                worker_logdir_root=shared_dir,
-                worker_ports=(7502, 7503),
-                interchange_port_range=(48000, 55000),
-                address="localhost",
-                provider=LocalProvider(
-                    channel=adhafera_sshChannel
-                ),
-                launch_cmd=(cmd),
-            ),
-            HighThroughputExecutor(
-                label="master_htex",
-                cores_per_worker=1,
-                mem_per_worker=0.35,
-                max_workers=6,
-                worker_debug=True,
-                address=address_by_hostname(),
-                provider=LocalProvider(
-                    channel=LocalChannel()
-                ),
-            )
+           # HighThroughputExecutor(
+            #    label="adhafera_htex",
+             #   cores_per_worker=1,
+              #  mem_per_worker=0.35,
+               # max_workers=6,
+                #worker_debug=True,
+                #working_dir=shared_dir,
+                #worker_logdir_root=shared_dir,
+                #worker_ports=(7502, 7503),
+                #interchange_port_range=(48000, 55000),
+                #address="localhost",
+                #provider=LocalProvider(
+                #    channel=adhafera_sshChannel,
+                #    cmd_timeout=timeout,
+                #    max_blocks=1
+                #),
+                #launch_cmd=(cmd),
+            #),
+           # HighThroughputExecutor(
+           #     label="master_htex",
+           #     cores_per_worker=1,
+           #     mem_per_worker=0.35,
+           #     max_workers=6,
+           #     worker_debug=True,
+           #     address=address_by_hostname(),
+           #     provider=LocalProvider(
+           #         channel=LocalChannel(),
+           #         cmd_timeout=timeout,
+           #         max_blocks=1
+           #     ),
+           # )
         ])
 
     return config
