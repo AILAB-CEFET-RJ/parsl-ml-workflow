@@ -18,7 +18,12 @@ from modules.sampling.data_util import build_dataset
 
 
 def runKNN(inputs, ks):
-    data = pickle.loads(inputs)
+
+    if inputs:
+        data = pickle.loads(inputs)
+    else:
+        data = build_dataset()
+
     outputs = []
 
     ts = datetime.datetime.now()
